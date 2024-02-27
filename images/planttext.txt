@@ -1,0 +1,109 @@
+@startuml
+' Define the Singleton Pattern for generic use
+class Singleton<T> {
+  {static} -instance : T
+  {static} +Instance : T {get}
+}
+
+' Basic Game Classes
+class PathBlock {
+  -rigidBody : Rigidbody
+  -flagDeleteBlock : bool
+  +void OnCollisionEnter(Collision collision)
+  +void Reinitialize()
+  +Deactivate() : void
+}
+
+class Ball {
+  -ballSpeed : float
+  -currentDirection : BallDirection
+  +void Update()
+  +ChangeDirection(Direction newDirection) : void
+}
+
+class GameAudioManager {
+  -audioSources : List<AudioSource>
+  +void playAudioUITap()
+  +PlayBackgroundMusic() : void
+}
+
+class LevelLoader {
+  -levels : List<Level>
+  +LevelCollection levelCollection
+  +LoadLevel(int levelId) : Level
+}
+
+class ObjectPool {
+  -pooledObjects : Dictionary<int, Queue<GameObject>>
+  +GameObject GetObjectByID(int id)
+  +ReleaseObject(GameObject obj) : void
+}
+
+class MainCamera {
+  -isFollowing : bool
+  +void startGame()
+  +FollowTarget(Transform target) : void
+}
+
+class GameFlow {
+  -currentScreenState : Screen
+  +void SET_SCREEN_TUTORIAL()
+  +ChangeState(Screen newState) : void
+}
+
+' UI Classes
+class PanelStartGame {
+  -isClickable : bool
+  +void OnClick()
+  +Show() : void
+}
+
+class PanelTutorial {
+  -tutorialSteps : List<string>
+  +void OnClick()
+  +NextStep() : void
+}
+
+class GUINotify {
+  -notifications : Queue<string>
+  +void actionLeaderboard()
+  +DisplayNextNotification() : void
+}
+
+' Game Mechanics Handling
+class HorizontalDeleter {
+  -deleteThreshold : float
+  +void OnTriggerExit(Collider collider)
+  +Reset() : void
+}
+
+' Path Generation
+class PathBuilder {
+  -pathLength : int
+  +void createBlockFromSequence(bool builderLevel)
+  +ExtendPath() : void
+}
+
+' Singleton Implementations
+Singleton <|-- PathBlock
+Singleton <|-- Ball
+Singleton <|-- GameAudioManager
+Singleton <|-- LevelLoader
+Singleton <|-- ObjectPool
+Singleton <|-- MainCamera
+Singleton <|-- GameFlow
+Singleton <|-- GUINotify
+
+' Key Interactions
+MainCamera --> GameAudioManager : "plays sounds"
+LevelLoader --> ObjectPool : "requests objects"
+Ball --> PathBlock : "interacts with"
+PanelStartGame --> MainCamera : "controls game start"
+PanelStartGame --> GameFlow : "navigates to tutorial"
+PanelTutorial --> MainCamera : "initiates game start from tutorial"
+GUINotify --> GameFlow : "manages GUI actions"
+GUINotify --> GameAudioManager : "plays UI sounds"
+HorizontalDeleter --> PathBlock : "deletes or recycles path blocks"
+
+' Note: Expanded each class with an additional function and attributes to provide a deeper insight into their roles and interactions.
+@enduml
