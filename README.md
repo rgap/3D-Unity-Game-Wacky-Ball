@@ -6,6 +6,19 @@ A 3D platform game I built during Make School 2014.
 
 <a href="https://play.google.com/store/apps/details?id=com.relguzman.wackyball">https://play.google.com/store/apps/details?id=com.relguzman.wackyball</a>
 
+### Libraries/Plugins and Tools
+
+- Unity 3D C\#
+- Google Anlytics
+- NGUI: Next-Gen UI
+- freesound.org
+
+### Programming Patterns
+
+- Object Pool
+- Singleton
+- Observer
+
 ### Some Screenshots
 
 <p align="center">
